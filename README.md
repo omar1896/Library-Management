@@ -216,7 +216,7 @@ This API provides endpoints for managing books, patrons, and borrowing records i
 1. **Clone the Repository:**
 
     ```bash
-    git clone https://github.com/omar1896/Library-Management-System
+    git clone https://github.com/omar1896/Library-Management
     
     ```
 
