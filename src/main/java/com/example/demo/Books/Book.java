@@ -14,6 +14,8 @@ import java.util.List;
 @Entity
 public class Book {
 
+
+
     @Id
     @SequenceGenerator(
             name = "book_sequence",
