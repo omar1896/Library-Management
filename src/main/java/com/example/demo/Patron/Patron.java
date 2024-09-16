@@ -9,6 +9,8 @@ import java.util.List;
 @Table(name = "Patron")
 @Entity
 public class Patron {
+
+    
     @Id
     @SequenceGenerator(
             name = "patron_sequence",
