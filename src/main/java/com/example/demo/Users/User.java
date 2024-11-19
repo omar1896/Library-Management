@@ -8,9 +8,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "User")
+@Table(name = "Users")
 @Entity
 public class User implements UserDetails {
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+
+    public User() {
+    }
+
+    public User(String email, String userName, String password, Role role) {
+        this.email = email;
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
+    }
+
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -25,8 +40,25 @@ public class User implements UserDetails {
     private String userName;
     private String email;
     private String password;
+    @Enumerated(EnumType.ORDINAL) // Maps Enum ordinal values (0, 1, etc.) to a smallint column in the database
+    @Column(nullable = false)
     private Role role;
+    private boolean enabled;
 
+//    public User(String email, String userName, String encode, Role role, boolean enabled) {
+//    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public User(String userName, String email, String password, Role role, boolean enabled) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.enabled = enabled;
+    }
 
     public User(Long id, String userName, String password) {
         this.id = id;
@@ -54,7 +86,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority(role.toValue()));
     }
 
     public String getPassword() {
