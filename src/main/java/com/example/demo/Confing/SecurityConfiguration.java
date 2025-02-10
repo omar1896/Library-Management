@@ -2,6 +2,7 @@ package com.example.demo.Confing;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -49,7 +50,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/api/v1/auth/register", "/api/v1/auth/authenticate")
                                 .permitAll()
-                                .requestMatchers("/api/Patron/**").hasAnyRole(Role.USER.toValue())
+                                .requestMatchers("/api/Patron/**").hasRole("USER")
+                                .requestMatchers(HttpMethod.GET,"/api/books/").hasRole("USER")
+                                .requestMatchers(HttpMethod.POST,"/api/books/").hasAnyAuthority("USER")
                                 .anyRequest()
                                 .authenticated()
                 )
